@@ -1,27 +1,32 @@
 
-# Alumni Tracker UMM
+# Alumni Tracker System
 
-Web aplikasi sederhana untuk pelacakan alumni.
+## Deskripsi
+Aplikasi web sederhana untuk melakukan pelacakan alumni berdasarkan data yang tersedia dan hasil simulasi.
 
 ## Fitur
-- Tambah data alumni
-- Search alumni
-- Hapus alumni
-- Simulasi pelacakan
-- Dark mode
-- Penyimpanan data menggunakan LocalStorage
+- Login system
+- Dashboard alumni
+- Pencarian data alumni (search)
+- Data lengkap (email, no HP, pekerjaan, posisi, sosial media)
+
+## Login
+Username: admin  
+Password: 123  
+
+## Data
+Data alumni diambil dari file Excel yang diberikan, kemudian dikembangkan dengan data simulasi untuk menjaga privasi.
 
 ## Teknologi
-HTML, CSS, JavaScript
-
-## Cara Menjalankan
-Buka file index.html di browser.
+- HTML
+- CSS
+- JavaScript
 
 ## Pengujian
 
-| No | Fitur | Skenario | Hasil |
-|----|------|---------|------|
-|1|Tambah Alumni|Input data alumni|Berhasil tampil di tabel|
-|2|Search Alumni|Cari nama alumni|Data terfilter|
-|3|Lacak Alumni|Klik tombol lacak|Status berubah|
-|4|Hapus Alumni|Klik tombol hapus|Data terhapus|
+| No | Fitur | Hasil |
+|----|------|------|
+| 1 | Login | Berhasil |
+| 2 | Dashboard tampil | Berhasil |
+| 3 | Search alumni | Berhasil |
+| 4 | Logout | Berhasil |
