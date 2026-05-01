@@ -2,82 +2,18 @@
 <html>
 <head>
   <title>Dashboard Alumni</title>
-
-  <style>
-    body{
-      font-family: Arial, sans-serif;
-      margin:0;
-      background: linear-gradient(135deg,#667eea,#764ba2);
-      color:#333;
-    }
-
-    header{
-      text-align:center;
-      padding:25px;
-      color:white;
-    }
-
-    header button{
-      margin-top:10px;
-      padding:8px 15px;
-      cursor:pointer;
-    }
-
-    .container{
-      width:90%;
-      max-width:1000px;
-      margin:auto;
-    }
-
-    .card{
-      background:white;
-      padding:20px;
-      margin:20px 0;
-      border-radius:12px;
-      box-shadow:0 10px 20px rgba(0,0,0,0.1);
-    }
-
-    input{
-      padding:10px;
-      margin:5px 0;
-      width:100%;
-    }
-
-    button{
-      padding:8px 12px;
-      cursor:pointer;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-    }
-
-    th,td{
-      padding:10px;
-      border-bottom:1px solid #ddd;
-      text-align:center;
-    }
-
-    .dark{
-      background:#111;
-      color:white;
-    }
-
-    .dark .card{
-      background:#222;
-    }
-
-    footer{
-      text-align:center;
-      color:white;
-      padding:20px;
-    }
-  </style>
-
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
+<script>
+// PROTEKSI LOGIN
+if(localStorage.getItem("login") !== "true"){
+  alert("Login dulu bro!");
+  window.location.href="login.html";
+}
+</script>
 
 <header>
   <h2>Dashboard Alumni</h2>
@@ -86,169 +22,53 @@
 
 <div class="container">
 
-  <div class="card">
-    <input type="text" id="search" placeholder="Cari alumni..." onkeyup="searchData()">
-  </div>
+<div class="card">
+<h3>Filter Alumni</h3>
 
-  <div class="card">
-    <table>
-      <thead>
-        <tr>
-          <th>Nama</th>
-          <th>Email</th>
-          <th>No HP</th>
-          <th>Pekerjaan</th>
-          <th>Posisi</th>
-          <th>Tipe</th>
-        </tr>
-      </thead>
-      <tbody id="dataAlumni"></tbody>
-    </table>
-  </div>
+<input id="f_nama" placeholder="Nama">
+<input id="f_email" placeholder="Email">
+<input id="f_hp" placeholder="No HP">
+<input id="f_linkedin" placeholder="LinkedIn">
+<input id="f_ig" placeholder="Instagram">
+<input id="f_fb" placeholder="Facebook">
+<input id="f_tt" placeholder="Tiktok">
+<input id="f_kerja" placeholder="Tempat Kerja">
+<input id="f_posisi" placeholder="Posisi">
+<input id="f_status" placeholder="Status">
+
+<button onclick="applyFilter()">Filter</button>
+<button onclick="resetFilter()">Reset</button>
 
 </div>
 
-<footer>
-  <p>Alumni Tracker System</p>
-</footer>
+<div class="card">
+<table>
+<thead>
+<tr>
+<th>Nama</th>
+<th>Email</th>
+<th>No HP</th>
+<th>LinkedIn</th>
+<th>Kerja</th>
+<th>Posisi</th>
+<th>Status</th>
+</tr>
+</thead>
 
-<script>
+<tbody id="dataAlumni"></tbody>
+</table>
 
-// 🔐 CEK LOGIN
-if(localStorage.getItem("login") !== "true") {
-  alert("Harus login dulu!");
-  window.location.href = "login.html";
-}
+<br>
+<button onclick="prevPage()">Prev</button>
+<span id="pageInfo"></span>
+<button onclick="nextPage()">Next</button>
 
-// 📊 DATA ALUMNI
-const alumni = [
-  {
-    nama: "Rianto",
-    prodi: "Teknik Sipil",
-    email: "rianto.sipil@gmail.com",
-    hp: "081234567801",
-    pekerjaan: "PT Wijaya Karya",
-    posisi: "Site Engineer",
-    tipe: "Swasta",
-    linkedin: "linkedin.com/in/rianto-sipil",
-    instagram: "@rianto.build"
-  },
-  {
-    nama: "Indratno",
-    prodi: "Teknik Sipil",
-    email: "indratno@gmail.com",
-    hp: "081234567802",
-    pekerjaan: "Kementerian PUPR",
-    posisi: "Staff Infrastruktur",
-    tipe: "PNS",
-    linkedin: "linkedin.com/in/indratno",
-    instagram: "@indra.civil"
-  },
+</div>
 
-  {
-    nama: "Rela Nugraha",
-    prodi: "Teknik Industri",
-    email: "rela.nugraha@gmail.com",
-    hp: "081234567803",
-    pekerjaan: "PT Astra International",
-    posisi: "Production Planner",
-    tipe: "Swasta",
-    linkedin: "linkedin.com/in/rela-nugraha",
-    instagram: "@rela.industry"
-  },
-  {
-    nama: "Ayunda Farda Diana",
-    prodi: "Teknik Industri",
-    email: "ayunda.diana@gmail.com",
-    hp: "081234567804",
-    pekerjaan: "Startup Logistik",
-    posisi: "Operations Analyst",
-    tipe: "Swasta",
-    linkedin: "linkedin.com/in/ayunda-farda",
-    instagram: "@ayunda.op"
-  },
+</div>
 
-  {
-    nama: "Firdaus",
-    prodi: "Hukum",
-    email: "firdaus.hukum@gmail.com",
-    hp: "081234567805",
-    pekerjaan: "Kantor Hukum",
-    posisi: "Legal Consultant",
-    tipe: "Wirausaha",
-    linkedin: "linkedin.com/in/firdaus-law",
-    instagram: "@firdaus.legal"
-  },
-  {
-    nama: "Alif Gibran Arman",
-    prodi: "Hukum",
-    email: "alif.gibran@gmail.com",
-    hp: "081234567806",
-    pekerjaan: "Pengadilan Negeri",
-    posisi: "Staff Administrasi",
-    tipe: "PNS",
-    linkedin: "linkedin.com/in/alif-gibran",
-    instagram: "@alif.law"
-  },
-
-  {
-    nama: "Nadia Zulfa",
-    prodi: "Farmasi",
-    email: "nadia.zulfa@gmail.com",
-    hp: "081234567807",
-    pekerjaan: "Apotek Sehat",
-    posisi: "Apoteker",
-    tipe: "Swasta",
-    linkedin: "linkedin.com/in/nadia-zulfa",
-    instagram: "@nadia.pharma"
-  },
-  {
-    nama: "Salsa Billa",
-    prodi: "Farmasi",
-    email: "salsa.billa@gmail.com",
-    hp: "081234567808",
-    pekerjaan: "RSUD Kota",
-    posisi: "Farmasis",
-    tipe: "PNS",
-    linkedin: "linkedin.com/in/salsa-billa",
-    instagram: "@salsa.med"
-  }
-];
-
-// 🔄 TAMPILKAN DATA
-const table = document.getElementById("dataAlumni");
-
-alumni.forEach(a => {
-  table.innerHTML += `
-    <tr>
-      <td>${a.nama}</td>
-      <td>${a.email}</td>
-      <td>${a.hp}</td>
-      <td>${a.pekerjaan}</td>
-      <td>${a.posisi}</td>
-      <td>${a.tipe}</td>
-    </tr>
-  `;
-});
-
-// 🔍 SEARCH
-function searchData() {
-  const keyword = document.getElementById("search").value.toLowerCase();
-  const rows = document.querySelectorAll("#dataAlumni tr");
-
-  rows.forEach(row => {
-    const text = row.innerText.toLowerCase();
-    row.style.display = text.includes(keyword) ? "" : "none";
-  });
-}
-
-// 🚪 LOGOUT
-function logout() {
-  localStorage.removeItem("login");
-  window.location.href = "login.html";
-}
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
